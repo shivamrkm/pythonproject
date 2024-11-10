@@ -4,10 +4,13 @@ from email.mime.text import MIMEText
 from dotenv import load_dotenv
 import os
 
-# Load environment variables from .env file
 load_dotenv()
+urls = ['http://example.com', 'http://another-example.com']
+sender_email = os.getenv('SENDER_EMAIL')
+sender_password = os.getenv('SENDER_PASSWORD')
+recipient_email = os.getenv('RECIPIENT_EMAIL')
 
-def check_website_status(urls, sender_email, sender_password, recipient_email, smtp_server='smtp.gmail.com', smtp_port=587):
+def check_website_status(urls, sender_email=sender_email, sender_password=sender_password, recipient_email=recipient_email, smtp_server='smtp.gmail.com', smtp_port=587):
     for url in urls:
         try:
             response = requests.get(url)
@@ -33,10 +36,7 @@ def send_alert(sender_email, sender_password, recipient_email, url, smtp_server,
     finally:
         server.quit()
 
-# Example Usage:
-urls = ['http://example.com', 'http://another-example.com']
-sender_email = os.getenv('SENDER_EMAIL')
-sender_password = os.getenv('SENDER_PASSWORD')
-recipient_email = os.getenv('RECIPIENT_EMAIL')
 
-check_website_status(urls, sender_email, sender_password, recipient_email)
+if __name__ == "__main__":
+
+    check_website_status(urls, sender_email, sender_password, recipient_email)
